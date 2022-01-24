@@ -1,6 +1,8 @@
 const { login, register } = require("$service/auth");
 const validate = require("$helpers/validate");
 const { loginSchema, registerSchema } = require("$validators/auth");
+const UserModel = require("$models/UserModel");
+const { stop } = require("$helpers/response");
 
 function authController(app) {
   app.get("/auth/login", async (req, res, next) => {

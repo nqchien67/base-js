@@ -22,7 +22,6 @@ const IsPublicProfile = {
   PUBLIC: 1,
   NOT_PUBLIC: 0,
 };
-
 module.exports = {
   ErrorCode,
   TokenType,
