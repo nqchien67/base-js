@@ -4,7 +4,7 @@ function errorHandler(errorObject, req, res, next) {
 }
 
 function stop(errorMessage, devMessage, payload = {}, status = 400) {
-  return { errorMessage, devMessage, status, payload };
+  return { errorMessage, devMessage, payload, status };
 }
 
 module.exports = {
