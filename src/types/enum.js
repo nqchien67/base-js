@@ -3,6 +3,7 @@ const ErrorCode = {
   Invalid_Input: "Invalid_Input",
   Missing_Access_Token_In_Header: "Missing_Access_Token_In_Header",
   Token_Expired: "Token_Expired",
+  Token_Not_Exist: "Token_Not_Exist",
   Refresh_Token_Expired: "Refresh_Token_Expired",
   Email_Address_Not_Exist: "Email_Address_Not_Exist",
   Email_Address_Already_Exist: "Email_Address_Already_Exist",

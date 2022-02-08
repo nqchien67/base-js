@@ -26,8 +26,8 @@ async function login(params) {
     _id: String(User._id),
     refreshToken: User.refreshToken,
   });
-  console.log(User.refreshToken + "\n\n" + token.refreshToken);
   User.refreshToken = token.refreshToken;
+  await User.save();
 
   return token;
 }
@@ -53,6 +53,28 @@ async function register(params) {
   await User.save();
 
   return token;
+}
+
+async function changePassword(params, userId) {
+  const { newPassword, oldPassword } = params;
+  const User = await UserModel.findOne({ _id: userId }, ["_id", "password"]);
+
+  if (!User) {
+    throw stop(ErrorCode.User_Not_Found, "Đéo thấy User");
+  }
+
+  const isCorrectPassword = compareSync(oldPassword, User.password);
+
+  if (!isCorrectPassword) {
+    throw stop(ErrorCode.Password_Incorrect);
+  }
+
+  const newPasswordHash = hashSync(newPassword, config.AUTH.SALT_ROUND);
+  User.password = newPasswordHash;
+
+  await User.save();
+
+  return newPassword;
 }
 
 function generateToken({ _id, refreshToken }) {
@@ -89,4 +111,4 @@ function createCmsRefreshToken({ _id }) {
   });
 }
 
-module.exports = { login, register };
+module.exports = { login, register, changePassword };

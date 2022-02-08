@@ -32,7 +32,26 @@ const registerSchema = {
   },
 };
 
+const changePasswordSchema = {
+  type: "object",
+  required: ["oldPassword", "newPassword"],
+  additionalProperties: false,
+  properties: {
+    oldPassword: {
+      type: "string",
+      minLength: 6,
+      maxLength: 32,
+    },
+    newPassword: {
+      type: "string",
+      minLength: 6,
+      maxLength: 32,
+    },
+  },
+};
+
 module.exports = {
   loginSchema,
   registerSchema,
+  changePasswordSchema,
 };
