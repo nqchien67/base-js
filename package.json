@@ -17,6 +17,7 @@
     "express": "^4.17.2",
     "express-rate-limit": "^6.1.0",
     "jsonwebtoken": "^8.5.1",
+    "log4js": "^6.4.1",
     "module-alias": "^2.2.2",
     "mongoose": "^6.1.7"
   },
