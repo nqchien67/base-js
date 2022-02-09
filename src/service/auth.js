@@ -111,4 +111,18 @@ function createCmsRefreshToken({ _id }) {
   });
 }
 
-module.exports = { login, register, changePassword };
+async function getUsers() {
+  const users = await UserModel.find({}, {});
+
+  return users;
+}
+
+async function getUserByEmail(email) {
+  const user = await UserModel.findOne({ email: email }, ["_id"]);
+  if (!user) {
+    throw stop("Không có", "Đéo có");
+  }
+  return user;
+}
+
+module.exports = { login, register, changePassword, getUsers, getUserByEmail };

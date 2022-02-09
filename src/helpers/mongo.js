@@ -1,22 +1,24 @@
 const mongoose = require("mongoose");
+const log = require("$helpers/log");
+const logger = log("Mongo connect");
 
 function createMongoConnection() {
-  console.log("Connecting to mongo DB...");
+  logger.info("Connecting to mongo DB...");
   return new Promise((resolve, reject) => {
     mongoose.connect(process.env.MONGO_URI, {});
 
     mongoose.connection.on("connected", function () {
-      console.log("Mongoose connected");
+      logger.info("Mongoose connected");
       return resolve(true);
     });
 
     mongoose.connection.on("error", function (err) {
-      console.log("Cannot connect to mongodb");
+      logger.error("Cannot connect to mongodb");
       return reject(err);
     });
 
     mongoose.connection.on("disconnected", function () {
-      console.log("Mongoose disconnected");
+      logger.info("Mongoose disconnected");
     });
   });
 }

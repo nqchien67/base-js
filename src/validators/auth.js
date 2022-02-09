@@ -50,8 +50,14 @@ const changePasswordSchema = {
   },
 };
 
+const getUserByEmailSchema = {
+  type: "string",
+  format: "email",
+};
+
 module.exports = {
   loginSchema,
   registerSchema,
   changePasswordSchema,
+  getUserByEmailSchema,
 };

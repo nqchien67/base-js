@@ -7,7 +7,12 @@ function stop(errorMessage, devMessage, status = 400, payload = {}) {
   return { errorMessage, devMessage, status, payload };
 }
 
+function done(res, data, status = 200) {
+  res.status(status).send(data);
+}
+
 module.exports = {
   errorHandler,
   stop,
+  done,
 };

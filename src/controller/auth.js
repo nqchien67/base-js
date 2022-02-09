@@ -1,11 +1,19 @@
-const { login, register, changePassword } = require("$service/auth");
+const {
+  login,
+  register,
+  changePassword,
+  getUsers,
+  getUserByEmail,
+} = require("$service/auth");
 const validate = require("$helpers/validate");
 const {
   loginSchema,
   registerSchema,
   changePasswordSchema,
+  getUserByEmailSchema,
 } = require("$validators/auth");
 const { verifyAccessToken } = require("$middlewares/auth");
+const { done } = require("$helpers/response");
 
 function authController(app) {
   app.get("/auth/login", async (req, res, next) => {
@@ -22,7 +30,7 @@ function authController(app) {
     const body = req.body;
     try {
       validate(registerSchema, body);
-      res.status(200).send(await register(body));
+      // res.status(200).send(await register(body));
     } catch (error) {
       next(error);
     }
@@ -44,6 +52,26 @@ function authController(app) {
       }
     }
   );
+
+  app.get("/users", async (req, res, next) => {
+    try {
+      res.status(200).send(await getUsers());
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  app.get("/email", async (req, res, next) => {
+    try {
+      const email = req.body.email;
+
+      validate(getUserByEmailSchema, email);
+      const data = await getUserByEmail(email);
+      done(res, data);
+    } catch (error) {
+      next(error);
+    }
+  });
 }
 
 module.exports = authController;
