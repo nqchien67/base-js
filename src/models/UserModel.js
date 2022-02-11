@@ -10,6 +10,7 @@ const userSchema = new Schema(
     refreshToken: { type: String },
     name: { type: String },
     avatar: { type: String },
+    tasks: [],
   },
   { timestamps: true }
 );

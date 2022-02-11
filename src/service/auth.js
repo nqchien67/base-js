@@ -112,7 +112,7 @@ function createCmsRefreshToken({ _id }) {
 }
 
 async function getUsers() {
-  const users = await UserModel.find({}, {});
+  const users = await UserModel.find({}, { password: 0, refreshToken: 0 });
 
   return users;
 }
@@ -120,9 +120,45 @@ async function getUsers() {
 async function getUserByEmail(email) {
   const user = await UserModel.findOne({ email: email }, ["_id"]);
   if (!user) {
-    throw stop("Không có", "Đéo có");
+    throw stop("Không có", "Không có");
   }
   return user;
 }
 
-module.exports = { login, register, changePassword, getUsers, getUserByEmail };
+async function addTask(params, userId) {
+  const { task, date, startTime, endTime } = params;
+  if (endTime <= startTime) {
+    throw stop("Giờ sai", "Giờ sai");
+  }
+
+  const User = await UserModel.findOne({ _id: userId }, ["_id", "tasks"]);
+  if (!User) {
+    throw stop(ErrorCode.User_Not_Found, "Không thấy User");
+  }
+  let tasks = User.tasks;
+
+  tasks.forEach((task) => {
+    if (task.date === date) {
+      if (
+        (startTime >= task.startTime && startTime <= task.endTime) ||
+        (endTime >= task.startTime && endTime <= task.endTime) ||
+        (startTime <= task.startTime && endTime >= task.endTime)
+      ) {
+        throw stop("Trùng giờ", "Trùng giờ");
+      }
+    }
+  });
+
+  tasks.push(params);
+  await User.save();
+  return tasks;
+}
+
+module.exports = {
+  login,
+  register,
+  changePassword,
+  getUsers,
+  getUserByEmail,
+  addTask,
+};

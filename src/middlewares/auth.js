@@ -7,7 +7,7 @@ function verifyAccessToken(req, res, next) {
   try {
     const bearerToken = req.header("authorization") || "";
     if (!bearerToken) {
-      throw stop(ErrorCode.Token_Not_Exist, "Đéo có Token");
+      throw stop(ErrorCode.Token_Not_Exist, "Không có Token");
     }
 
     const token = bearerToken.replace("Bearer ", "");

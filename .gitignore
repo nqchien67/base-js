@@ -43,3 +43,4 @@ tool/**/*
 
 # ignore yarn.lock
 yarn.lock
+cc.txt
