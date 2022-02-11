@@ -4,6 +4,7 @@ const {
   changePassword,
   getUsers,
   getUserByEmail,
+  addTask,
 } = require("$service/auth");
 const validate = require("$helpers/validate");
 const {
@@ -11,6 +12,7 @@ const {
   registerSchema,
   changePasswordSchema,
   getUserByEmailSchema,
+  addTaskSchema,
 } = require("$validators/auth");
 const { verifyAccessToken } = require("$middlewares/auth");
 const { done } = require("$helpers/response");
@@ -29,8 +31,9 @@ function authController(app) {
   app.post("/auth/register", async (req, res, next) => {
     const body = req.body;
     try {
+      const token = await register(body);
       validate(registerSchema, body);
-      // res.status(200).send(await register(body));
+      done(res, token);
     } catch (error) {
       next(error);
     }
@@ -42,7 +45,6 @@ function authController(app) {
     async (req, res, next) => {
       try {
         const body = req.body;
-
         validate(changePasswordSchema, body);
 
         const result = await changePassword(body, req.userId);
