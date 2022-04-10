@@ -1,9 +1,8 @@
 const { stop } = require("$helpers/response");
-const { ErrorCode } = require("$types/enum");
 const TaskModel = require("$models/TaskModel");
 
-async function addTask(params, userId) {
-  const { date, startTime, endTime } = params;
+async function addProduct(params, userId) {
+  const { note, date, startTime, endTime } = params;
   if (endTime <= startTime) {
     throw stop("Giờ sai", "Giờ sai");
   }

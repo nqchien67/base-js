@@ -8,7 +8,6 @@ const taskController = require("$controller/task");
 const { errorHandler } = require("$helpers/response");
 const createMongoConnection = require("$helpers/mongo");
 const http = require("http");
-const UserModel = require("$models/UserModel");
 
 const app = express();
 const server = http.createServer(app);

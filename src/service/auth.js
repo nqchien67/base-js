@@ -60,7 +60,7 @@ async function changePassword(params, userId) {
   const User = await UserModel.findOne({ _id: userId }, ["_id", "password"]);
 
   if (!User) {
-    throw stop(ErrorCode.User_Not_Found, "Đéo thấy User");
+    throw stop(ErrorCode.User_Not_Found, "user not found");
   }
 
   const isCorrectPassword = compareSync(oldPassword, User.password);
